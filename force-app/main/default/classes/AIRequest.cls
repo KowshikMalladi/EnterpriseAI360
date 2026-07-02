@@ -3,119 +3,166 @@
  * Class Name    : AIRequest
  * Author        : Kowshik Malladi
  * Project       : Enterprise AI 360
- * Description   :
+ * Version       : 2.0
+ *
+ * Description
  * -----------------------------------------------------------------------------
- * This class represents a standardized AI request object that is passed
- * throughout the Enterprise AI 360 framework.
+ * Standard request object used across the Enterprise AI 360 platform.
  *
- * Every request coming from Salesforce, Slack, REST APIs, MCP Server,
- * or future channels will be converted into this object before processing.
+ * Every request coming from:
+ * - Salesforce
+ * - Slack
+ * - MCP
+ * - REST API
+ * - Agentforce
+ * - External Systems
  *
- * Instead of passing multiple parameters between classes, we encapsulate
- * everything into a single request object.
+ * will be converted into this object before processing.
  *
- * Example:
- *
- * AIRequest request = new AIRequest();
- * request.prompt = 'Show all open Opportunities';
- * request.userId = UserInfo.getUserId();
- * request.source = 'Salesforce';
- *
- * Future Enhancements:
- * - Conversation Memory
- * - AI Agent Context
- * - Selected Record Information
- * - User Preferences
- * - Locale
- * - Execution Flags
  * =============================================================================
  */
 
 public with sharing class AIRequest {
 
     /**
-     * -------------------------------------------------------------------------
-     * User's Natural Language Prompt
+     * User's Natural Language Prompt.
      *
      * Example:
      * "Show all Accounts"
      * "Create a Case"
-     * "Update Opportunity Stage"
-     * -------------------------------------------------------------------------
      */
     public String prompt;
 
     /**
-     * -------------------------------------------------------------------------
-     * Salesforce User Id
-     *
-     * Purpose:
-     * - Security Validation
-     * - CRUD/FLS Checks
-     * - Audit Logging
-     * - Permission Validation
-     * -------------------------------------------------------------------------
+     * Salesforce User Id.
      */
     public Id userId;
 
     /**
-     * -------------------------------------------------------------------------
-     * Conversation / Session Identifier
-     *
-     * Purpose:
-     * - Maintain AI Conversation Context
-     * - Multi-step AI Interactions
-     * - Future Memory Support
-     *
-     * Example:
-     * SESSION_10001
-     * -------------------------------------------------------------------------
+     * Conversation Session Id.
      */
     public String sessionId;
 
     /**
-     * -------------------------------------------------------------------------
-     * Source System
+     * Request Source.
      *
-     * Identifies where the request originated.
-     *
-     * Possible Values:
-     * - Salesforce
-     * - Slack
-     * - REST
-     * - MCP
-     * - Agentforce
-     * -------------------------------------------------------------------------
+     * Examples:
+     * Salesforce
+     * Slack
+     * MCP
+     * REST
+     * Agentforce
      */
     public String source;
 
     /**
-     * -------------------------------------------------------------------------
-     * Additional Runtime Context
-     *
-     * Stores dynamic information without modifying the class.
-     *
-     * Examples:
-     * - Record Id
-     * - Object API Name
-     * - Locale
-     * - AI Provider
-     * - Model Name
-     * - Execution Flags
-     * - User Preferences
-     *
-     * This makes the framework extensible and avoids changing
-     * the class every time new context is required.
-     * -------------------------------------------------------------------------
+     * Runtime Context.
      */
-    public Map<String, Object> context;
+    public Map<String,Object> context;
+
+    // =========================================================================
+    // Generic Salesforce Request Information
+    // =========================================================================
 
     /**
-     * Constructor
+     * Salesforce Object API Name.
      *
-     * Initializes the Context Map so callers can safely add values.
+     * Examples:
+     * Account
+     * Case
+     * Opportunity
+     * Custom_Object__c
      */
-    public AIRequest() {
-        context = new Map<String, Object>();
+    public String objectName;
+
+    /**
+     * Operation to perform.
+     *
+     * Supported Values:
+     * QUERY
+     * CREATE
+     * UPDATE
+     * DELETE
+     * UPSERT
+     * DESCRIBE
+     * RUN_FLOW
+     */
+    public String operation;
+
+    /**
+     * Fields to retrieve.
+     *
+     * Example:
+     * Name
+     * Industry
+     * Phone
+     */
+    public List<String> fields;
+
+    /**
+     * WHERE clause.
+     *
+     * Example:
+     * Industry = 'Healthcare'
+     */
+    public String whereClause;
+
+    /**
+     * ORDER BY clause.
+     *
+     * Example:
+     * CreatedDate DESC
+     */
+    public String orderBy;
+
+    /**
+     * Maximum records to return.
+     */
+    public Integer limitSize;
+
+    /**
+     * Record Id.
+     *
+     * Used for:
+     * UPDATE
+     * DELETE
+     */
+    public Id recordId;
+
+    /**
+     * Field values for CREATE/UPDATE.
+     *
+     * Example:
+     * {
+     *   'Name' => 'Acme Technologies',
+     *   'Industry' => 'Healthcare'
+     * }
+     */
+    public Map<String,Object> fieldValues;
+
+    /**
+     * Additional filters or parameters.
+     *
+     * Future Examples:
+     * Date Range
+     * Search Text
+     * Locale
+     */
+    public Map<String,Object> parameters;
+
+    /**
+     * Constructor.
+     */
+    public AIRequest(){
+
+        context = new Map<String,Object>();
+        fields = new List<String>();
+        fieldValues = new Map<String,Object>();
+        parameters = new Map<String,Object>();
+
+        // Default values
+        limitSize = 100;
+
     }
+
 }
