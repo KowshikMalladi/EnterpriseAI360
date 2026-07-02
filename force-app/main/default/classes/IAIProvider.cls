@@ -31,6 +31,6 @@ public interface IAIProvider {
      * Returns:
      * QUERY_ACCOUNT
      */
-    String determineIntent(AIRequest request);
+    AIIntent determineIntent(AIRequest request);
 
 }
