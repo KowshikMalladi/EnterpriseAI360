@@ -13,7 +13,7 @@
  * =============================================================================
  */
 
-public with sharing class AccountRepository {
+public with sharing class SalesforceDataService {
 
     /**
      * Returns all active Accounts.
