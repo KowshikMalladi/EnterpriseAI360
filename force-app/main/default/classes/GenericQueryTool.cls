@@ -11,7 +11,7 @@
  * =============================================================================
  */
 
-public with sharing class QueryAccountTool implements IAITool {
+public with sharing class GenericQueryTool implements IAITool {
 
     public AIResponse execute(AIRequest request){
 
