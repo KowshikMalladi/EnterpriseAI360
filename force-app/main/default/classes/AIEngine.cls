@@ -44,22 +44,21 @@ public with sharing class AIEngine {
         try{
 
             // Step 1 - Determine Intent
-            String intent = AIPlanner.determineIntent(request);
+            AIIntent aiIntent = AIPlanner.determineIntent(request);
 
-            if(String.isBlank(intent)){
+            if(aiIntent == null || String.isBlank(aiIntent.intent)){
 
-                response.message = 'Unable to determine user intent.';
-                return response;
+    response.message = 'Unable to determine user intent.';
+    return response;
 
-            }
+}
 
             // Step 2 - Get Tool
-            IAITool tool = AIToolRegistry.getTool(intent);
+            IAITool tool = AIToolRegistry.getTool(aiIntent.intent);
 
             if(tool == null){
 
-                response.message = 'No AI Tool registered for intent : ' + intent;
-                return response;
+                response.message = 'No AI Tool registered for intent : ' + aiIntent.intent;
 
             }
 
