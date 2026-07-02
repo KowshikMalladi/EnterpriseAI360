@@ -34,9 +34,23 @@ public with sharing class AIToolRegistry {
      *
      * @return IAITool
      */
-    public static IAITool getTool(String toolName){
+   public static IAITool getTool(String toolName){
 
-    return null;
+    switch on toolName{
+
+        when 'QUERY_ACCOUNT'{
+
+            return new QueryAccountTool();
+
+        }
+
+        when else{
+
+            return null;
+
+        }
+
+    }
 
 }
 
