@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <!-- Custom Metadata Type -->
+    <types>
+        <members>AI_Configuration__mdt</members>
+        <name>CustomObject</name>
+    </types>
+
+    <!-- Custom Metadata Records -->
+    <types>
+        <members>AI_Configuration.DEFAULT</members>
+        <name>CustomMetadata</name>
+    </types>
+
+    <!-- Permission Sets -->
+    <types>
+        <members>AI_Admin</members>
+        <members>AI_Permissions</members>
+        <name>PermissionSet</name>
+    </types>
+
+    <version>66.0</version>
+
+</Package>
+
+
