@@ -35,35 +35,11 @@ public with sharing class AIPlanner {
      * @return String
      *      Tool Intent
      */
-    public static String determineIntent(AIRequest request){
+ public static AIIntent determineIntent(AIRequest request){
 
-        if(request == null || String.isBlank(request.prompt)){
-            return null;
-        }
+        IAIProvider provider = AIProviderManager.getProvider();
 
-        String prompt = request.prompt.toLowerCase();
-
-        // Query Account
-        if(prompt.contains('account')){
-            return 'QUERY_ACCOUNT';
-        }
-
-        // Create Case
-        if(prompt.contains('case')){
-            return 'CREATE_CASE';
-        }
-
-        // Opportunity
-        if(prompt.contains('opportunity')){
-            return 'QUERY_OPPORTUNITY';
-        }
-
-        // Lead
-        if(prompt.contains('lead')){
-            return 'QUERY_LEAD';
-        }
-
-        return 'UNKNOWN';
+        return provider.determineIntent(request);
 
     }
 
